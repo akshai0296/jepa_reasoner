@@ -1,0 +1,9 @@
+.venv/
+__pycache__/
+*.pyc
+*.pt
+*.ckpt
+.cache/
+data/*/raw/
+outputs/
+wandb/

@@ -1,0 +1,17 @@
+Metadata-Version: 2.4
+Name: jepa_reasoner
+Version: 0.1.0
+Summary: I-JEPA-inspired cross-domain latent reasoning system
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: torch>=2.3.0
+Requires-Dist: transformers>=4.44.0
+Requires-Dist: sentence-transformers>=3.0.0
+Requires-Dist: accelerate>=0.33.0
+Requires-Dist: datasets>=3.0.0
+Requires-Dist: numpy>=1.26.0
+Requires-Dist: scikit-learn>=1.4.0
+Requires-Dist: pandas>=2.2.0
+Requires-Dist: tqdm>=4.66.0
+Requires-Dist: pydantic>=2.7.0
+Requires-Dist: pyyaml>=6.0.1

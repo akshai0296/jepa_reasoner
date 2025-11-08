@@ -1,0 +1,6 @@
+pyproject.toml
+jepa_reasoner.egg-info/PKG-INFO
+jepa_reasoner.egg-info/SOURCES.txt
+jepa_reasoner.egg-info/dependency_links.txt
+jepa_reasoner.egg-info/requires.txt
+jepa_reasoner.egg-info/top_level.txt
