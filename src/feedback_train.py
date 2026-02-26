@@ -305,7 +305,7 @@ def main():
 
     model = JEPAReasoner(domain=args.domain, latent_dim=config["latent_dim"])
     model.load_state_dict(checkpoint["model_state"])
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    device = torch.device("cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu"))
     model.to(device)
 
     verifier = Verifier(latent_dim=config["latent_dim"])

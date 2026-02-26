@@ -52,7 +52,10 @@ class Trainer:
     ):
         self.model = model
         self.config = config
-        self.device = torch.device(config.get("device", "cuda" if torch.cuda.is_available() else "cpu"))
+        device_cfg = config.get("device", "auto")
+        if device_cfg == "auto":
+            device_cfg = "cuda" if torch.cuda.is_available() else ("mps" if torch.backends.mps.is_available() else "cpu")
+        self.device = torch.device(device_cfg)
         self.model.to(self.device)
 
         self.tokenizer = model.context_encoder.tokenizer
@@ -266,8 +269,9 @@ class Trainer:
         grad_clip = self.config.get("grad_clip", 1.0)
 
         optimizer = self._build_optimizer("joint")
+        steps_per_epoch = (len(self.train_dataset) + batch_size - 1) // batch_size
         scheduler = self._build_scheduler(
-            optimizer, num_epochs * len(self.train_dataset) // batch_size
+            optimizer, num_epochs * steps_per_epoch
         )
 
         logger.info("=== Stage 3: Joint Fine-tuning ===")
@@ -441,13 +445,18 @@ def main():
     train_data, val_data = load_training_data(config)
     logger.info(f"Loaded {len(train_data)} train, {len(val_data)} val examples")
 
+    predictor_kwargs = config.get("predictor_kwargs", {"hidden_dim": 1024, "num_layers": 4, "num_heads": 8})
+    decoder_kwargs = config.get("decoder_kwargs", {"hidden_dim": 512, "num_layers": 4, "num_heads": 8})
+    decoder_kwargs.setdefault("latent_dim", config["latent_dim"])
+
     model = JEPAReasoner(
         domain=config["domains"][0],
         latent_dim=config["latent_dim"],
-        predictor_type="transformer",
-        predictor_kwargs={"hidden_dim": 1024, "num_layers": 4, "num_heads": 8},
-        decoder_type="scratch",
-        decoder_kwargs={"hidden_dim": 512, "num_layers": 4, "num_heads": 8},
+        predictor_type=config.get("predictor_type", "transformer"),
+        predictor_kwargs=predictor_kwargs,
+        decoder_type=config.get("decoder_type", "scratch"),
+        decoder_kwargs=decoder_kwargs,
+        freeze_backbone=config.get("freeze_backbone", False),
     )
 
     trainer = Trainer(model, train_data, val_data, config)
