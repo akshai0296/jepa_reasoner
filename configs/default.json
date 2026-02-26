@@ -1,0 +1,53 @@
+{
+    "domains": ["math"],
+    "latent_dim": 768,
+
+    "predictor_type": "transformer",
+    "predictor_kwargs": {
+        "hidden_dim": 1024,
+        "num_layers": 4,
+        "num_heads": 8,
+        "dropout": 0.1,
+        "use_latent_z": false,
+        "num_predictor_tokens": 4
+    },
+
+    "decoder_type": "scratch",
+    "decoder_kwargs": {
+        "hidden_dim": 512,
+        "num_layers": 4,
+        "num_heads": 8,
+        "max_seq_len": 512,
+        "num_latent_tokens": 8
+    },
+
+    "freeze_backbone": false,
+    "ema_decay": 0.996,
+
+    "predictor_epochs": 30,
+    "decoder_epochs": 15,
+    "finetune_epochs": 10,
+
+    "batch_size": 8,
+    "lr": 1e-4,
+    "lr_predictor": 1e-4,
+    "lr_decoder": 5e-5,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+
+    "loss_type": "l2",
+    "contrastive_weight": 0.1,
+    "contrastive_temp": 0.07,
+
+    "max_context_len": 256,
+    "max_target_len": 256,
+    "max_samples_per_dataset": 5000,
+
+    "use_amp": true,
+    "device": "auto",
+    "output_dir": "checkpoints",
+
+    "feedback_cycles": 5,
+    "feedback_problems_per_cycle": 50,
+    "llm_provider": "openai"
+}

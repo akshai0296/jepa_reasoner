@@ -1,0 +1,44 @@
+{
+    "domains": ["math"],
+    "latent_dim": 384,
+
+    "predictor_type": "mlp",
+    "predictor_kwargs": {
+        "hidden_dim": 1024,
+        "num_layers": 3,
+        "dropout": 0.1,
+        "use_latent_z": false
+    },
+
+    "decoder_type": "scratch",
+    "decoder_kwargs": {
+        "hidden_dim": 256,
+        "num_layers": 2,
+        "num_heads": 4,
+        "max_seq_len": 256,
+        "num_latent_tokens": 4
+    },
+
+    "freeze_backbone": true,
+    "ema_decay": 0.996,
+
+    "predictor_epochs": 15,
+    "decoder_epochs": 10,
+    "finetune_epochs": 5,
+
+    "batch_size": 16,
+    "lr": 3e-4,
+    "weight_decay": 0.01,
+    "grad_clip": 1.0,
+
+    "loss_type": "l2",
+    "contrastive_weight": 0.05,
+
+    "max_context_len": 128,
+    "max_target_len": 128,
+    "max_samples_per_dataset": 1000,
+
+    "use_amp": true,
+    "device": "auto",
+    "output_dir": "checkpoints/math_small"
+}
