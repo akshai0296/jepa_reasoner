@@ -1,4 +1,4 @@
-# I-JEPA Reasoner: Cross-Domain Latent Reasoning System
+# JEPA Reasoner: Cross-Domain Latent Reasoning System
 
 A self-improving reasoning system that **thinks in embeddings and talks in language**. Inspired by Yann LeCun's Joint Embedding Predictive Architecture (JEPA), this system predicts abstract latent representations of solutions instead of generating tokens directly — then decodes those latents into human-readable code, math solutions, or natural language explanations.
 
